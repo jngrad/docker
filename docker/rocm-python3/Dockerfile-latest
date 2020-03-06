@@ -24,10 +24,13 @@ RUN apt-get update && apt-get install -y \
     vim \
     ccache \
     rocrand rocfft rocthrust kmod \
+&& ln -s /opt/rocm/hcc/bin/hcc /opt/rocm/hip/bin/hcc \
+&& ln -s /opt/rocm/hcc/bin/hcc-config /opt/rocm/hip/bin/hcc-config \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m espresso
+ENV export HCC_HOME=/opt/rocm/hcc
 USER 1000
 WORKDIR /home/espresso
 
