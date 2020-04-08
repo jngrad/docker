@@ -15,16 +15,13 @@ echo "Log in to registry."
 echo $password | docker login -u ${username} --password-stdin docker.pkg.github.com || exit 1
 
 full_tag=docker.pkg.github.com/${username}/${project}/${image}:${tag}
-build_command="docker build docker -t ${full_tag} -f docker/Dockerfile-${image}"
-
-if [ "$build_args" != "" ]; then
-    for arg in $build_args; do
-        build_command="${build_command} --build-arg ${arg}"
-    done
-fi
+build_options=""
+for arg in ${build_args}; do
+    build_options="${build_options} --build-arg '${arg}'"
+done
 
 echo "Building image with tag: ${full_tag}"
-eval $build_command || exit 1
+docker build docker -t ${full_tag} -f docker/Dockerfile-${image} ${build_options} || exit 1
 
 if [ "$event_name" != "pull_request" ]; then
     echo "Pushing to registry."
