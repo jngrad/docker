@@ -15,4 +15,6 @@ ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
 RUN useradd -m espresso
 USER espresso
+ENV HOME="/home/espresso"
+RUN pip3 install --user dataclasses
 WORKDIR /home/espresso

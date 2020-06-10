@@ -13,4 +13,6 @@ RUN apt_folder=$([ "${BASE_VERSION}" = "latest" ] && echo "debian" || echo "${BA
 
 RUN useradd -m espresso
 USER 1000
+ENV HOME="/home/espresso"
+RUN pip3 install --user dataclasses
 WORKDIR /home/espresso
