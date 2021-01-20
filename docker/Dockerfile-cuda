@@ -2,9 +2,9 @@ FROM nvidia/cuda:11.2.0-devel-ubuntu20.04
 ENV DEBIAN_FRONTEND noninteractive
 COPY build-and-install-scafacos.sh /tmp
 COPY ubuntu-packages.txt /tmp
-RUN apt-get update && xargs -a /tmp/ubuntu-packages.txt apt-get install --no-install-recommends -y \
-    && apt-get install --no-install-recommends -y \
-    libthrust-dev \
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y gcc-10 g++-10 libthrust-dev \
+    && xargs -a /tmp/ubuntu-packages.txt apt-get install --no-install-recommends -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN bash /tmp/build-and-install-scafacos.sh
